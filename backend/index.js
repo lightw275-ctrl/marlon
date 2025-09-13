@@ -9,9 +9,7 @@ app.use(cors());
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: "*"
-  }
+  cors: { origin: "*" }
 });
 
 // Socket.io logika
@@ -20,13 +18,11 @@ let score = { teamA: 0, teamB: 0 };
 io.on("connection", (socket) => {
   console.log("Nekdo se je povezal");
 
-  // Pošlji trenutni score ob povezavi
   socket.emit("scoreUpdate", score);
 
-  // Posodobi score
   socket.on("updateScore", (data) => {
     score = { ...score, ...data };
-    io.emit("scoreUpdate", score); // pošlji vsem klientom
+    io.emit("scoreUpdate", score);
   });
 });
 
@@ -34,7 +30,7 @@ io.on("connection", (socket) => {
 const frontendBuildPath = path.join(__dirname, "../frontend/build");
 app.use(express.static(frontendBuildPath));
 
-// Če ne najde API rute, pošlji frontend index.html
+// Če ni API route, pošlji frontend index.html
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
