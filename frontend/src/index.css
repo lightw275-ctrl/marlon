@@ -1,71 +1,41 @@
-/* NBA style font */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
 body {
-  background: transparent; /* transparentno ozadje */
   margin: 0;
-  font-family: 'Bebas Neue', sans-serif;
-  color: white;
+  background: transparent;
+  color: white; /* da se vidi na temnem ozadju OBS-a */
+  font-family: 'Orbitron', sans-serif; /* lep digital-style font */
 }
-
 .scoreboard {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  align-items: center;
+  gap: 50px;
+  background: transparent; /* no background */
   padding: 20px;
 }
 
-.panel {
-  background: rgba(0, 0, 0, 0.7); /* semi-transparent black */
-  border-radius: 20px;
-  padding: 30px 40px;
+.team {
   text-align: center;
-  box-shadow: 0px 4px 20px rgba(0,0,0,0.4);
-  min-width: 200px;
+  color: white;
 }
 
-.panel h1 {
-  font-size: 80px;
+h2 {
   margin: 0;
-  font-weight: bold;
-  letter-spacing: 2px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #ddd;
 }
 
-.label {
-  font-size: 22px;
-  margin: 10px 0;
+.score {
+  font-size: 120px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: #ffcc00; /* NBA-style yellow */
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
 }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-button {
-  border: none;
-  border-radius: 12px;
-  padding: 10px 20px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button.add {
-  background: #007bff;
+.separator {
+  font-size: 100px;
+  font-weight: 700;
   color: white;
 }
 
-button.add:hover {
-  background: #0056b3;
-}
-
-button.remove {
-  background: #333;
-  color: white;
-}
-
-button.remove:hover {
-  background: #111;
-}
