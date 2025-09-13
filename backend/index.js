@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ const io = new Server(server, {
   }
 });
 
+// Socket.io logika
 let score = { teamA: 0, teamB: 0 };
 
 io.on("connection", (socket) => {
@@ -28,6 +30,15 @@ io.on("connection", (socket) => {
   });
 });
 
+// Serve frontend build
+const frontendBuildPath = path.join(__dirname, "../frontend/build");
+app.use(express.static(frontendBuildPath));
+
+// Če ne najde API rute, pošlji frontend index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(frontendBuildPath, "index.html"));
+});
+
+// Port
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
