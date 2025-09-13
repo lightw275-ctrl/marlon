@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
-import "./App.css";
+import "./index.css";
+
 
 const socket = io("https://basketball-counter-backend.onrender.com"); 
 // lokalno testiranje: io("http://localhost:3001")
