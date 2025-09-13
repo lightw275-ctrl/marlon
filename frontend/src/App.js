@@ -1,42 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { io } from "socket.io-client";
-import "./index.css";
-
-
-const socket = io("https://basketball-counter-backend.onrender.com"); 
-// lokalno testiranje: io("http://localhost:3001")
+import React, { useState } from "react";
+import "./index.css"; // ker si rekel da imas index.css, ne App.css
 
 function App() {
-  const [teamA, setTeamA] = useState(0);
-  const [teamB, setTeamB] = useState(0);
-
-  useEffect(() => {
-    socket.on("scoreUpdate", ({ teamA, teamB }) => {
-      setTeamA(teamA);
-      setTeamB(teamB);
-    });
-
-    const handleKeyDown = (e) => {
-      if (e.key === "q") socket.emit("updateScore", { team: "A", delta: 1 });
-      if (e.key === "w") socket.emit("updateScore", { team: "A", delta: -1 });
-      if (e.key === "a") socket.emit("updateScore", { team: "B", delta: 1 });
-      if (e.key === "s") socket.emit("updateScore", { team: "B", delta: -1 });
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  const [hits, setHits] = useState(0);
+  const [misses, setMisses] = useState(0);
 
   return (
     <div className="scoreboard">
-      <div className="team">
-        <h2>Team A</h2>
-        <div className="score">{teamA}</div>
+      {/* Hits Panel */}
+      <div className="panel">
+        <h1>{hits}</h1>
+        <div className="label">Hits</div>
+        <div className="buttons">
+          <button className="add" onClick={() => setHits(hits + 1)}>+1 Hit</button>
+          <button className="remove" onClick={() => setHits(Math.max(hits - 1, 0))}>-1 Hit</button>
+        </div>
       </div>
-      <div className="separator">:</div>
-      <div className="team">
-        <h2>Team B</h2>
-        <div className="score">{teamB}</div>
+
+      {/* Misses Panel */}
+      <div className="panel">
+        <h1>{misses}</h1>
+        <div className="label">Misses</div>
+        <div className="buttons">
+          <button className="add" onClick={() => setMisses(misses + 1)}>+1 Miss</button>
+          <button className="remove" onClick={() => setMisses(Math.max(misses - 1, 0))}>-1 Miss</button>
+        </div>
       </div>
     </div>
   );
