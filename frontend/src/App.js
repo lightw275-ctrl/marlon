@@ -1,46 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
+import "./App.css";
 
-// Tukaj zamenjaj z URL-jem tvojega backend-a na Render ali lokalno
-const socket = io("http://localhost:3001");
+const socket = io("https://basketball-counter-backend.onrender.com"); 
+// lokalno testiranje: io("http://localhost:3001")
 
 function App() {
-  const [score, setScore] = useState({ teamA: 0, teamB: 0 });
+  const [teamA, setTeamA] = useState(0);
+  const [teamB, setTeamB] = useState(0);
 
   useEffect(() => {
-    socket.on("scoreUpdate", (newScore) => setScore(newScore));
+    socket.on("scoreUpdate", ({ teamA, teamB }) => {
+      setTeamA(teamA);
+      setTeamB(teamB);
+    });
 
-    const handleKey = (e) => {
-      if (e.key === "q") socket.emit("updateScore", { teamA: score.teamA + 1 });
-      if (e.key === "w") socket.emit("updateScore", { teamB: score.teamB + 1 });
-      if (e.key === "a") socket.emit("updateScore", { teamA: score.teamA - 1 });
-      if (e.key === "s") socket.emit("updateScore", { teamB: score.teamB - 1 });
+    const handleKeyDown = (e) => {
+      if (e.key === "q") socket.emit("updateScore", { team: "A", delta: 1 });
+      if (e.key === "w") socket.emit("updateScore", { team: "A", delta: -1 });
+      if (e.key === "a") socket.emit("updateScore", { team: "B", delta: 1 });
+      if (e.key === "s") socket.emit("updateScore", { team: "B", delta: -1 });
     };
 
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [score]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
-  <div
-    style={{
-      fontSize: "100px",
-      textAlign: "center",
-      marginTop: "100px",
-      backgroundColor: "transparent", // OBS bo videl transparent
-      color: "white",                 // besedilo bo belo
-      width: "100vw",
-      height: "100vh",
-    }}
-  >
-    <div>Team A: <span>{score.teamA}</span></div>
-    <div>Team B: <span>{score.teamB}</span></div>
-    <div style={{ marginTop: "50px" }}>
-      <button onClick={() => socket.emit("updateScore", { teamA: score.teamA + 1 })}>+ Team A</button>
-      <button onClick={() => socket.emit("updateScore", { teamB: score.teamB + 1 })}>+ Team B</button>
+    <div className="scoreboard">
+      <div className="team">
+        <h2>Team A</h2>
+        <div className="score">{teamA}</div>
+      </div>
+      <div className="separator">:</div>
+      <div className="team">
+        <h2>Team B</h2>
+        <div className="score">{teamB}</div>
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default App;

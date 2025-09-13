@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  background: transparent;
+  color: white; /* da se vidi na temnem ozadju OBS-a */
+  font-family: 'Orbitron', sans-serif; /* lep digital-style font */
+}
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  background: transparent; /* no background */
+  padding: 20px;
+}
+
+.team {
+  text-align: center;
+  color: white;
+}
+
+h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 400;
+  color: #ddd;
+}
+
+.score {
+  font-size: 120px;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: #ffcc00; /* NBA-style yellow */
+  text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
+}
+
+.separator {
+  font-size: 100px;
+  font-weight: 700;
+  color: white;
+}
